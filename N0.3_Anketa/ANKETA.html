@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ANKETA</title>
+</head>
+    <body>
+        <script>
+
+            function isLettersOnly(str) {
+                return /^[a-zа-яё]+$/i.test(str);
+            }
+
+            function isNumbersOnly(str) {
+                return /^[0-9]+$/i.test(str);
+            }
+
+            function enterSurname() {
+                let surname = prompt('Введите вашу фамилию');
+                if (isLettersOnly(surname))
+                    return surname;
+                else
+                    return enterSurname();
+            }
+
+            function enterName() {
+                let name = prompt('Введите вашу имя');
+                if (isLettersOnly(name))
+                    return name;
+                else
+                    return enterName();
+            }
+
+            function enterPatronymic() {
+                let patronymic = prompt('Введите ваше отчество');
+                if (isLettersOnly(patronymic))
+                    return patronymic;
+                else
+                    return enterPatronymic();
+            }
+            
+            function enterAge() {
+                let age = prompt('Возраст');
+                if (isNumbersOnly(age))
+                    return parseInt(age);
+                else
+                    return enterAge();
+            }
+
+            let surname = enterSurname();
+            let name = enterName();
+            let patronymic = enterPatronymic();
+            let age = enterAge();
+            let isMan = confirm('Ваш пол - мужской?');
+            let ageDays = age * 365;
+            let ageAfter = age + 5;
+
+            let gender = null;
+            let pension = null;
+
+            if (isMan) {
+                gender = 'мужской';
+                if (age > 60)
+                    pension = 'да';
+                else pension = 'нет';
+            } else {
+                gender = 'женский';
+                if (age > 55)
+                    pension = 'да';
+                else pension = 'нет';
+            }
+
+            alert(` \n ваше ФИО: ${surname} ${name} ${patronymic} \n ваш возраст в годах: ${age} \n ваш возраст в днях: ${ageDays} \n через пять лет вам будет: ${ageAfter} \n ваш пол: ${gender} \n вы на пенсии: ${pension}`);
+        </script>
+    </body>
+</html>
