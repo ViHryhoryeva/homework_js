@@ -8,7 +8,10 @@
         <script>
 
             function isLettersOnly(str) {
-                return /^[a-zа-яё]+$/i.test(str);
+                if (str == null) 
+                    return false;
+                else 
+                    return /^[a-zа-яё]+$/i.test(str);
             }
 
             function isNumbersOnly(str) {
@@ -17,14 +20,14 @@
 
             function enterSurname() {
                 let surname = prompt('Введите вашу фамилию');
-                if (isLettersOnly(surname))
+                if (isLettersOnly(surname)) 
                     return surname;
                 else
                     return enterSurname();
             }
 
             function enterName() {
-                let name = prompt('Введите вашу имя');
+                let name = prompt('Введите ваше имя');
                 if (isLettersOnly(name))
                     return name;
                 else
