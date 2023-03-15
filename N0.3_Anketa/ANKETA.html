@@ -18,36 +18,44 @@
                 return /^[0-9]+$/i.test(str);
             }
 
+            // function enterSurname() {
+            //     let surname = prompt('Введите вашу фамилию');
+            //     if (isLettersOnly(surname)) 
+            //         return surname;
+            //     else
+            //         return enterSurname();
+            // }
+
             function enterSurname() {
-                let surname = prompt('Введите вашу фамилию');
-                if (isLettersOnly(surname)) 
-                    return surname;
-                else
-                    return enterSurname();
+                while (true) {
+                    let surname = prompt('Введите вашу фамилию');
+                    if (isLettersOnly(surname)) 
+                        return surname;
+                }
             }
 
             function enterName() {
-                let name = prompt('Введите ваше имя');
-                if (isLettersOnly(name))
-                    return name;
-                else
-                    return enterName();
+                while (true) {
+                    let name = prompt('Введите ваше имя');
+                    if (isLettersOnly(name))
+                        return name;
+                }
             }
 
             function enterPatronymic() {
-                let patronymic = prompt('Введите ваше отчество');
-                if (isLettersOnly(patronymic))
-                    return patronymic;
-                else
-                    return enterPatronymic();
+                while (true) {
+                    let patronymic = prompt('Введите ваше отчество');
+                    if (isLettersOnly(patronymic))
+                        return patronymic;
+                }
             }
             
             function enterAge() {
-                let age = prompt('Возраст');
-                if (isNumbersOnly(age))
-                    return parseInt(age);
-                else
-                    return enterAge();
+                while (true) {
+                    let age = prompt('Возраст');
+                    if (isNumbersOnly(age))
+                        return parseInt(age);
+                }
             }
 
             let surname = enterSurname();
