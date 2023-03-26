@@ -13,16 +13,18 @@
         }
 
         function mood(colorsCount) {
-            const colors = [ '', 'красный', 'оранжевый', 'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый' ];
+            const colors = [ '', 'красный', 'оранжевый', 
+            'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый' ];
             
             console.log( 'цветов: ' + colorsCount );
             
             let used = {};
-            for ( let i = 1; i <= colorsCount; i++ ) {
+            for ( let i = 1; i <= colorsCount;) {
                 const n = randomDiap(1,7);
                 const colorName = colors[n];
                 if ( colorName in used )
-                    return colorsCount;
+                    continue;
+                i++;
                 used[colorName] = true;
                 console.log( colorName );
             }
