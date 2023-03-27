@@ -15,11 +15,11 @@
                 .replaceAll('ъ', '')
                 .replaceAll('ё', 'е');
             console.log(sentence);
-            
-            for ( let i = 0; i < sentence.length / 2; i++) {
-               if (sentence[i] !== sentence[(sentence.length -1) - i]) {
-                return false;
-               }
+            let middleSumbol = sentence.length % 2 == 0 ? sentence.length / 2 : sentence.length / 2 - 1;
+            for ( let i = 0; i < middleSumbol; i++) {
+                if ((sentence[i] !== sentence[(sentence.length - 1) - i])) {
+                    return false;
+                }
             } 
             return true;
         }
@@ -27,9 +27,9 @@
         let enterSentence = prompt('Введите фразу:');
 
         if (isPalindrome(enterSentence)) {
-            alert('Это палиндрома');
+            alert('Это палиндром');
         } else {
-            alert('Это не палиндрома');
+            alert('Это не палиндром');
         }
         console.log(enterSentence);
 
