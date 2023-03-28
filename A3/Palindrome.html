@@ -15,8 +15,7 @@
                 .replaceAll('ъ', '')
                 .replaceAll('ё', 'е');
             console.log(sentence);
-            let middleSumbol = sentence.length % 2 == 0 ? sentence.length / 2 : sentence.length / 2 - 1;
-            for ( let i = 0; i < middleSumbol; i++) {
+            for ( let i = 0; i < Math.floor(sentence.length / 2); i++) {
                 if ((sentence[i] !== sentence[(sentence.length - 1) - i])) {
                     return false;
                 }
