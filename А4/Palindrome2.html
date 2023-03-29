@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome</title>
+</head>
+<body>
+    <script>
+        function isPalindrome(str) {
+            if (str.length == 0 || str.length == 1) {
+                return true;
+            } else if (str.charAt(0) == str.charAt(str.length - 1)) {
+                return isPalindrome(str.substring(1, str.length - 1));
+            }
+            return false;
+        }   
+
+        let enterSentence = prompt('Введите фразу:');
+            enterSentence = enterSentence.toLowerCase()
+                .replaceAll(' ', '')
+                .replaceAll('ь', '')
+                .replaceAll('ъ', '')
+                .replaceAll('ё', 'е');
+
+        if (isPalindrome(enterSentence)) {
+            alert('Это палиндром');
+        } else {
+            alert('Это не палиндром');
+        }
+        console.log(enterSentence);
+    </script>
+</body>
+</html>
