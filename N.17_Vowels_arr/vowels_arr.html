@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vowels_Arr</title>
+</head>
+    <body>
+        <script>
+            let vowelsStr = 'аяуюоеёэиыАЯУЮОЕЁЭИЫ';
+            
+            
+            function getVowelsCount(string) {
+                string = string.toLowerCase().split('');
+                let count = 0;
+                string.forEach(function(item, i, string) {
+                    if (vowelsStr.includes(item)) {
+                        count++;
+                    }
+                })
+                return count;
+            }
+            let string = prompt('Введите буквы:');
+
+
+            function getVowelsCount1(string) {
+                string = string.toLowerCase().split('');
+                let vowelsStrFilter = string.filter(function(item, i, string) {
+                    return vowelsStr.includes(item);
+                })
+                return vowelsStrFilter.length;
+            }
+            let string1 = prompt('Введите буквы:');
+
+
+            function getVowelsCount2(string) {
+                string = string.toLowerCase().split('');
+                
+                let result = string.reduce(function(count, item) {
+                    if (vowelsStr.indexOf(item) !== -1) {
+                        count++;
+                    } 
+                    return count;
+                }, 0);
+                return result;
+
+            }
+            let string2 = prompt('Введите буквы:');
+
+            console.log(` ${getVowelsCount(string)} \n ${getVowelsCount1(string1)} \n ${getVowelsCount2(string2)}`);
+        </script>
+    </body>
+</html>
+
