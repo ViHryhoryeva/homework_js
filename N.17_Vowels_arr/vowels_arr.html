@@ -21,7 +21,6 @@
                 })
                 return count;
             }
-            let string = prompt('Введите буквы:');
 
 
             function getVowelsCount1(string) {
@@ -31,24 +30,23 @@
                 })
                 return vowelsStrFilter.length;
             }
-            let string1 = prompt('Введите буквы:');
 
 
             function getVowelsCount2(string) {
                 string = string.toLowerCase().split('');
-                
+
                 let result = string.reduce(function(count, item) {
-                    if (vowelsStr.indexOf(item) !== -1) {
+                    if (vowelsStr.includes(item)) {
                         count++;
-                    } 
+                    }
                     return count;
                 }, 0);
-                return result;
+            return result;
+        }
 
-            }
-            let string2 = prompt('Введите буквы:');
+            let string = prompt('Введите буквы:');
 
-            console.log(` ${getVowelsCount(string)} \n ${getVowelsCount1(string1)} \n ${getVowelsCount2(string2)}`);
+            console.log(` ${getVowelsCount(string)} \n ${getVowelsCount1(string)} \n ${getVowelsCount2(string)} `);
         </script>
     </body>
 </html>
