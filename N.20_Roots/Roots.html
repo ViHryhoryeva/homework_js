@@ -17,15 +17,14 @@
         // возвращает массив корней
         function squareRoots(a, b, c) {
             const d = b * b - 4 * a * c; // дискриминант
+            if ( a === 0 ) 
+                return [ -c / b ]; // если уравнение неполное
 
             if ( d < 0 )
                 return []; // нет корней
 
-            if ( a == 0) 
-                return [ -c / b]; // если уравнение неполное
-
             if ( d == 0 )
-                return [ -b / (2 * a)]; // один корень
+                return [ -b / (2 * a ) ]; // один корень
 
             const x1 = (-b + Math.sqrt(d)) / (2 * a);
             const x2 = (-b - Math.sqrt(d)) / (2 * a);
