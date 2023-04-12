@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beverage_hash_func</title>
+</head>
+<body>
+    <script>
+        function HashStorageFunc() {
+            let storage = {};
+            this.addValue = function(key, value) {
+                storage[key] = value;
+                console.log('Beverage \'' + key + '\' has been added');
+            }
+            this.getValue = function(key) {
+                return storage[key];
+            }
+            this.deleteValue = function(key) {
+                let isExist = key in storage;
+                if (isExist) {
+                    delete storage[key];
+                    console.log('Beverage \'' + key + '\' has been deleted');
+                    return true;
+                } else {
+                    console.log('Beverage \'' + key + '\' does not exists');
+                    return false;
+                }
+            }
+            this.getKeys = function() {
+                return Object.keys(storage);
+            } 
+        }
+
+        function Beverage(_nameBeverage, _alcoholic, _ingredients) {
+            this.nameBeverage = _nameBeverage;
+            this.alcoholic = _alcoholic;
+            this.ingredients = _ingredients;
+        }
+
+        let cola = new Beverage('Кола', 'Безалкогольный', 'Сахар, вода, коричневый сахар, сок и натертая цедра апельсинов, лайма и лимона, семена кориандра, цветки лаванды, звездочки бадьяна, ваниль, пол палочки корицы, имбирь, лимонная кислота');
+        let mojito = new Beverage('Мохито', 'Алкогольный', 'Ром белый, напиток «Швепс», лайм, лимон, сахар коричневый, листья мяты, лед');
+        let margorita = new Beverage('Маргорита', 'Алкогольный', 'Текила, трипл-сек (ликер Куантро), сок лайма, долька лайма, соль (по вкусу), лед');
+        let tea = new Beverage('Чай', 'Безалкогольный', 'Крупнолистовой черный чай');
+        
+        let beverageStorage = new HashStorageFunc();
+
+        beverageStorage.addValue('cola', cola);
+        beverageStorage.addValue('mojito', mojito);
+        beverageStorage.addValue('margorita', margorita);
+        beverageStorage.addValue('tea', tea);
+
+        console.log(beverageStorage.getValue('cola'));
+        console.log(beverageStorage.getKeys());
+        console.log(beverageStorage.deleteValue('cola'));
+        console.log(beverageStorage.deleteValue('cola'));
+        console.log(beverageStorage.getValue('cola'));
+        console.log(beverageStorage.getKeys());
+
+        console.log(beverageStorage.getValue('mojito'));
+        console.log(beverageStorage.getKeys());
+        console.log(beverageStorage.deleteValue('mojito'));
+        console.log(beverageStorage.getValue('mojito'));
+        console.log(beverageStorage.getKeys());
+
+        console.log(beverageStorage.getValue('margorita'));
+        console.log(beverageStorage.getKeys());
+        console.log(beverageStorage.deleteValue('margorita'));
+        console.log(beverageStorage.getValue('margorita'));
+        console.log(beverageStorage.getKeys());
+
+        console.log(beverageStorage.getValue('tea'));
+        console.log(beverageStorage.getKeys());
+        console.log(beverageStorage.deleteValue('tea'));
+        console.log(beverageStorage.getValue('tea'));
+        console.log(beverageStorage.getKeys());
+
+    </script>
+</body>
+</html>
