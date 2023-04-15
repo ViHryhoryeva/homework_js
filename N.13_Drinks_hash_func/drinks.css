@@ -1,0 +1,11 @@
+input {
+    padding: 5px;
+    cursor: pointer;
+    margin: 10px;
+    width: 300px;
+}
+input:hover {
+    box-shadow: 0 0 0 0.25rem #bab2dc;
+    background-color: #bab2dc;
+    border-radius: 5px;
+}

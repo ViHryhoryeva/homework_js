@@ -5,8 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beverage_hash_func</title>
+    <link rel="stylesheet" type="text/css" href="drinks.css">
 </head>
 <body>
+    <div><input  type=button value='Ввод информации о напитке' onclick = "addBeverage()"></div>
+    <div><input  type=button value='Получение информации о напитке' onclick = "getBeverage()"></div>
+    <div><input  type=button value='Удаление информации о напитке' onclick = "deleteBeverage()"></div>
+    <div><input  type=button value='Перечень всех напитков' onclick = "allBeverage()"></div>
+
     <script>
         function HashStorageFunc() {
             let storage = {};
@@ -76,6 +82,34 @@
         console.log(beverageStorage.getValue('tea'));
         console.log(beverageStorage.getKeys());
 
+        function addBeverage() {
+            const _nameBeverage = prompt('Введите название напитка:');
+            const alcoholic = confirm('Алкогольный ли?');
+            const ingredients = prompt('Ингредиенты:');
+            beverageStorage.addValue(_nameBeverage, { alcoholic, ingredients });
+        }
+
+        function getBeverage() {
+            const _nameBeverage = prompt('Введите название напитка:');
+            const info = beverageStorage.getValue(_nameBeverage);
+            if ( info !== undefined ) {
+                alert (` Название напитка:  ${_nameBeverage} \n Алкогольный ли?  ${info.alcoholic} \n Ингредиенты:  ${info.ingredients} `);
+            } else {
+                alert ('Такого напитка нет');
+            }
+        }   
+
+        function deleteBeverage() {
+            const _nameBeverage = prompt('Введите название напитка:');
+            const del = beverageStorage.deleteValue(_nameBeverage);
+            alert( del ? 'Напиток удален' : 'Напиток не удален');
+        }
+
+        function allBeverage() {
+            const all = beverageStorage.getKeys().join();
+            console.log(all);
+        }
     </script>
+    
 </body>
 </html>
