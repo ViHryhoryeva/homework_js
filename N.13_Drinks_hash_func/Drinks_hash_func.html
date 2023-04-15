@@ -11,7 +11,7 @@
     <div><input  type=button value='Ввод информации о напитке' onclick = "addBeverage()"></div>
     <div><input  type=button value='Получение информации о напитке' onclick = "getBeverage()"></div>
     <div><input  type=button value='Удаление информации о напитке' onclick = "deleteBeverage()"></div>
-    <div><input  type=button value='Перечень всех напитков' onclick = "allBeverage()"></div>
+    <div><input  type=button value='Перечень всех напитков' onclick = "getBeverageList()"></div>
 
     <script>
         function HashStorageFunc() {
@@ -57,57 +57,33 @@
         beverageStorage.addValue('margorita', margorita);
         beverageStorage.addValue('tea', tea);
 
-        console.log(beverageStorage.getValue('cola'));
-        console.log(beverageStorage.getKeys());
-        console.log(beverageStorage.deleteValue('cola'));
-        console.log(beverageStorage.deleteValue('cola'));
-        console.log(beverageStorage.getValue('cola'));
-        console.log(beverageStorage.getKeys());
-
-        console.log(beverageStorage.getValue('mojito'));
-        console.log(beverageStorage.getKeys());
-        console.log(beverageStorage.deleteValue('mojito'));
-        console.log(beverageStorage.getValue('mojito'));
-        console.log(beverageStorage.getKeys());
-
-        console.log(beverageStorage.getValue('margorita'));
-        console.log(beverageStorage.getKeys());
-        console.log(beverageStorage.deleteValue('margorita'));
-        console.log(beverageStorage.getValue('margorita'));
-        console.log(beverageStorage.getKeys());
-
-        console.log(beverageStorage.getValue('tea'));
-        console.log(beverageStorage.getKeys());
-        console.log(beverageStorage.deleteValue('tea'));
-        console.log(beverageStorage.getValue('tea'));
-        console.log(beverageStorage.getKeys());
-
         function addBeverage() {
-            const _nameBeverage = prompt('Введите название напитка:');
+            const name = prompt('Введите название напитка:');
             const alcoholic = confirm('Алкогольный ли?');
             const ingredients = prompt('Ингредиенты:');
-            beverageStorage.addValue(_nameBeverage, { alcoholic, ingredients });
+            beverageStorage.addValue(name, { alcoholic, ingredients });
         }
 
         function getBeverage() {
-            const _nameBeverage = prompt('Введите название напитка:');
-            const info = beverageStorage.getValue(_nameBeverage);
+            const name = prompt('Введите название напитка:');
+            const info = beverageStorage.getValue(name);
+            let isAlcoholic = info.alcoholic ? 'Да' : 'Нет'
             if ( info !== undefined ) {
-                alert (` Название напитка:  ${_nameBeverage} \n Алкогольный ли?  ${info.alcoholic} \n Ингредиенты:  ${info.ingredients} `);
+                alert (` Название напитка:  ${name} \n Алкогольный ли?  ${isAlcoholic} \n Ингредиенты:  ${info.ingredients} `);
             } else {
                 alert ('Такого напитка нет');
             }
         }   
 
         function deleteBeverage() {
-            const _nameBeverage = prompt('Введите название напитка:');
-            const del = beverageStorage.deleteValue(_nameBeverage);
+            const name = prompt('Введите название напитка:');
+            const del = beverageStorage.deleteValue(name);
             alert( del ? 'Напиток удален' : 'Напиток не удален');
         }
 
-        function allBeverage() {
-            const all = beverageStorage.getKeys().join();
-            console.log(all);
+        function getBeverageList() {
+            const beverageList = beverageStorage.getKeys().join();
+            console.log(beverageList);
         }
     </script>
     
