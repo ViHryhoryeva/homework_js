@@ -79,8 +79,8 @@
         function getBeverage() {
             const name = prompt('Введите название напитка:');
             const info = beverageStorage.getValue(name);
-            let isAlcoholic = info.alcoholic ? 'Да' : 'Нет';
             if ( info !== undefined ) {
+                let isAlcoholic = info.alcoholic ? 'Да' : 'Нет';
                 alert (` Название напитка:  ${name} \n Алкогольный ли?  ${isAlcoholic} \n Ингредиенты:  ${info.ingredients} `);
             } else {
                 alert ('Такого напитка нет');
