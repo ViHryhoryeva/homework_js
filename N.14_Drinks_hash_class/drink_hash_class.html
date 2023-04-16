@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beverage_hash_func</title>
+    <link rel="stylesheet" type="text/css" href="drinks.css">
+</head>
+<body>
+    <div><input  type=button value='Ввод информации о напитке' onclick = "addBeverage()"></div>
+    <div><input  type=button value='Получение информации о напитке' onclick = "getBeverage()"></div>
+    <div><input  type=button value='Удаление информации о напитке' onclick = "deleteBeverage()"></div>
+    <div><input  type=button value='Перечень всех напитков' onclick = "getBeverageList()"></div>
+
+    <script>
+        class HashStorageFunc {
+            constructor() {
+                this.storage = {};
+            }
+            addValue(key, value) {
+                this.storage[key] = value;
+                console.log('Beverage \'' + key + '\' has been added');
+            }
+            getValue(key) {
+                return this.storage[key];
+            }
+            deleteValue(key) {
+                let isExist = key in this.storage;
+                if (isExist) {
+                    delete this.storage[key];
+                    console.log('Beverage \'' + key + '\' has been deleted');
+                    return true;
+                } else {
+                    console.log('Beverage \'' + key + '\' does not exists');
+                    return false;
+                }
+            }
+            getKeys() {
+                return Object.keys(this.storage);
+            }
+        }
+
+        class Beverage {
+            constructor(nameBeverage, alcoholic, ingredients) {
+                this.nameBeverage = nameBeverage;
+                this.alcoholic = alcoholic;
+                this.ingredients = ingredients;
+            }
+        }
+
+        let cola = new Beverage('Кола', 'Безалкогольный', 'Сахар, вода, коричневый сахар, сок и натертая цедра апельсинов, лайма и лимона, семена кориандра, цветки лаванды, звездочки бадьяна, ваниль, пол палочки корицы, имбирь, лимонная кислота');
+        let mojito = new Beverage('Мохито', 'Алкогольный', 'Ром белый, напиток «Швепс», лайм, лимон, сахар коричневый, листья мяты, лед');
+        let margorita = new Beverage('Маргорита', 'Алкогольный', 'Текила, трипл-сек (ликер Куантро), сок лайма, долька лайма, соль (по вкусу), лед');
+        let tea = new Beverage('Чай', 'Безалкогольный', 'Крупнолистовой черный чай');
+        let beverageStorage = new HashStorageFunc();
+
+        beverageStorage.addValue('cola', cola);
+        beverageStorage.addValue('mojito', mojito);
+        beverageStorage.addValue('margorita', margorita);
+        beverageStorage.addValue('tea', tea);
+
+        function addBeverage() {
+            const name = prompt('Введите название напитка:');
+            const alcoholic = confirm('Алкогольный ли?');
+            const ingredients = prompt('Ингредиенты:');
+            beverageStorage.addValue(name, { alcoholic, ingredients });
+        }
+
+        function getBeverage() {
+            const name = prompt('Введите название напитка:');
+            const info = beverageStorage.getValue(name);
+            console.log(info);
+            let isAlcoholic = info.alcoholic ? 'Да' : 'Нет';
+            if ( info !== undefined ) {
+                alert (` Название напитка:  ${name} \n Алкогольный ли?  ${isAlcoholic} \n Ингредиенты:  ${info.ingredients} `);
+            } else {
+                alert ('Такого напитка нет');
+            }
+        }   
+
+        function deleteBeverage() {
+            const name = prompt('Введите название напитка:');
+            const del = beverageStorage.deleteValue(name);
+            alert( del ? 'Напиток удален' : 'Напиток не удален');
+        }
+
+        function getBeverageList() {
+            const beverageList = beverageStorage.getKeys().join();
+            alert(` Список напитков: ${beverageList} `);
+        }
+    </script>
+</body>
+</html>
