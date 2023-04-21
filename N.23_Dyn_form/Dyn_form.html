@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dyn_form</title>
+</head>
+<body>
+    <script>
+        let formDef1 = [
+        {label:'Название сайта:', kind:'longtext', name:'sitename'},
+        {label:'URL сайта:', kind:'longtext', name:'siteurl'},
+        {label:'Посетителей в сутки:', kind:'number', name:'visitors'},
+        {label:'E-mail для связи:', kind:'shorttext', name:'email'},
+        {label:'Рубрика каталога:', kind:'combo', name:'division',
+            variants:[{text:'здоровье', value:1}, {text:'домашний уют', value:2}, {text:'бытовая техника', value:3}]},
+        {label:'Размещение:',  kind:'radio',name:'payment',
+            variants:[{text:'бесплатное', value:1}, {text:'платное', value:2}, {text:'VIP', value:3}]},
+        {label:'Разрешить отзывы:', kind:'check', name:'votes'},
+        {label:'Описание сайта:', kind:'memo', name:'description'},
+        {caption:'Опубликовать', kind:'submit'},
+        ];
+
+        let formDef2 = [
+        {label:'Фамилия:', kind:'longtext', name:'lastname'},
+        {label:'Имя:', kind:'longtext', name:'firstname'},
+        {label:'Отчество:', kind:'longtext', name:'secondname'},
+        {label:'Возраст:', kind:'number', name:'age'},
+        {caption:'Зарегистрироваться', kind:'submit'},
+        ];
+
+
+        function createdForm(array) {
+            let form = document.createElement('form');
+            form.name = 'block';
+            form.method = 'post';
+            form.action = 'https://fe.it-academy.by/TestForm.php';
+            for ( let el of array ) {
+                switch ( el.kind ) {
+                    case ('longtext'):
+                        let textLabel = document.createElement('label');
+                        textLabel.innerHTML = el.label;
+                        let textField = document.createElement('input');
+                        textField.type = 'text';
+                        textLabel.appendChild(textField)
+                        form.appendChild(textLabel);
+                        form.appendChild(document.createElement('br'));
+                        break;
+                    case ('number'):
+                        let numberLabel = document.createElement('label');
+                        numberLabel.innerHTML = el.label;
+                        let numberField = document.createElement('input')
+                        numberField.type = 'number'
+                        numberLabel.appendChild(numberField);
+                        form.appendChild(numberLabel);
+                        form.appendChild(document.createElement('br'));
+                        break;
+                    case ('shorttext'):
+                        let shortTextLabel = document.createElement('label');
+                        shortTextLabel.innerHTML = el.label;
+                        form.appendChild(shortTextLabel);
+                        let shortTextField = document.createElement('input')
+                        shortTextField.type = 'email'
+                        shortTextLabel.appendChild(shortTextField);
+                        form.appendChild(document.createElement('br'));
+                        break;
+                    case ('combo'):
+                        let comboLabel = document.createElement('label');
+                        comboLabel.innerHTML = el.label;
+                        let comboField = document.createElement('select');
+                        for ( let variant of el.variants ) {
+                            let option = document.createElement('option');
+                            option.text = variant.text;
+                            option.value = variant.value;
+                            comboField.appendChild(option);
+                        }
+                        comboLabel.appendChild(comboField);
+                        form.appendChild(comboLabel);
+                        form.appendChild(document.createElement('br'));
+                        break;
+                    case ('radio'):
+                        let radioLabel = document.createElement('label');
+                        radioLabel.innerHTML = el.label;
+                        for ( let variant of el.variants ) {
+                            let radioField = document.createElement('input');
+                            radioField.type = el.kind;
+                            radioField.name = el.name;
+                            radioField.value = variant.value;
+                            let radioText = document.createElement('span');
+                            radioText.innerHTML = variant.text;
+                            radioLabel.appendChild(radioField);
+                            radioLabel.appendChild(radioText);
+                        }
+                        form.appendChild(radioLabel);
+                        form.appendChild(document.createElement('br'));
+                        break;
+                    case ('check'):
+                        let checkLabel = document.createElement('label');
+                        checkLabel.innerHTML = el.label;
+                        form.appendChild(checkLabel);
+                        let checkField = document.createElement('input')
+                        checkField.type = 'checkbox'
+                        form.appendChild(checkField);
+                        form.appendChild(document.createElement('br'));
+                        break;
+                    case ('memo'):
+                        let memoLabel = document.createElement('label');
+                        memoLabel.innerHTML = el.label;
+                        form.appendChild(memoLabel);
+                        let memoField = document.createElement('textarea')
+                        memoField.type = 'textarea'
+                        form.appendChild(memoField);
+                        form.appendChild(document.createElement('br'));
+                        break;
+                    case ('submit'):
+                        let submitField = document.createElement('input')
+                        submitField.type = 'submit'
+                        form.appendChild(submitField);
+                        form.appendChild(document.createElement('br'));
+                        break;
+                }
+            }
+            document.body.appendChild(form);
+            document.body.appendChild(document.createElement('hr'));
+        }
+          
+        createdForm(formDef1);
+        createdForm(formDef2);   
+    </script>
+</body>
+</html>
