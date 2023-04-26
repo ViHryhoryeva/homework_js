@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid_form</title>
+    <style>
+        span.color {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form name="ourSite" method="post" action="https://fe.it-academy.by/TestForm.php" onclick="formValid(eo)" onsubmit="formValid()">
+        <div >Для внесения вашего сайта в каталог, заполните форму:</div><br>
+        <label>Разработчики:
+            <input type="text" name="developers" onblur="false">
+            <span class="color" id="razrError"></span> <!-- ошибка -->
+        </label><br>
+        <label>Название сайта:
+            <input type="text" name="siteName" onblur="false">
+            <span class="color" id="razrErrorSite"></span> <!-- ошибка -->
+        </label><br>
+        <label>URL сайта:
+            <input type="text" name="urlSite" onblur="false">
+            <span class="color" id="razrErrorUrl"></span> <!-- ошибка -->
+        </label><br>
+        <label>Дата запуска сайта:
+            <input type="date" name="dateStart" onblur="false">
+            <span class="color" id="razrErrorDate"></span> <!-- ошибка -->
+        </label><br>
+        <label>Посетителей в сутки:
+            <input type="number" name="people" onblur="false">
+            <span class="color" id="razrErrorCount"></span> <!-- ошибка -->
+        </label><br>
+        <label>E-mail для связи:
+            <input type="email" name="email" onblur="false">
+            <span class="color" id="razrErrorEmail"></span> <!-- ошибка -->
+        </label><br>
+        <label>Рубрика каталога:
+            <select name="catalog" onblur="false">
+                <option>здоровье</option>
+                <option>домашний уют</option>
+                <option>бытовая техника</option>
+            </select>
+            <span class="color" id="razrErrorCatalog"></span> <!-- ошибка -->
+        </label><br>
+        <label>Размещение:
+            <input type="radio" name="payment">бесплатное
+             <input type="radio" name="payment">платное
+            <input type="radio" name="payment">VIP
+            <span class="color" id="razrErrorRadio"></span> <!-- ошибка -->
+        </label><br>
+        <label>Разрешить отзывы:
+            <input type="checkbox" name="votes" onchange="validCheck(focusOnError)">
+            <span class="color" id="razrErrorCheck"></span> <!-- ошибка -->
+        </label><br>
+        <label>Описание сайта:
+            <textarea name="description" onblur="false"></textarea>
+            <span class="color" id="razrErrorDescription"></span> <!-- ошибка -->
+        </label><br>
+        <input type="submit" name="button" value="Опубликовать">
+    </form>
+    <script>
+        function validRazr(focusOnError) { // аргумент в скобках, параметр на фокусирование
+            const razrElem = document.forms.ourSite.elements.developers;
+            const razrValue = razrElem.value; // значение
+            const errorElem = document.getElementById('razrError'); // ошибку находим
+
+            let errorCount = 0; // подсчет ошибок, начиная с нуля
+            if ( razrValue ) { // проверка если не пустое
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    razrElem.focus(); // прокрутка
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+        function validNameSite(focusOnError) {
+            const nameSiteElem = document.forms.ourSite.elements.siteName;
+            const nameSiteValue = nameSiteElem.value;
+            const errorElem = document.getElementById('razrErrorSite');
+
+            let errorCount = 0;
+            if ( nameSiteValue ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    nameSiteElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+
+        function validUrl(focusOnError) {
+            const urlElem = document.forms.ourSite.elements.urlSite;
+            const urlValue = urlElem.value;
+            const errorElem = document.getElementById('razrErrorUrl');
+
+            let errorCount = 0;
+            if ( urlValue ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    urlElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+
+        function validDate(focusOnError) {
+            const dataElem = document.forms.ourSite.elements.dateStart;
+            const dataValue = dataElem.value;
+            const errorElem = document.getElementById('razrErrorDate');
+
+            let errorCount = 0;
+            if ( dataValue ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    dataElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+
+        function validPeople(focusOnError) {
+            const peopleElem = document.forms.ourSite.elements.people;
+            const peopleValue = peopleElem.value;
+            const errorElem = document.getElementById('razrErrorCount');
+
+            let errorCount = 0;
+            if ( peopleValue ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    peopleElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+
+        function validEmail(focusOnerror) {
+            const emailElem = document.forms.ourSite.elements.email;
+            const emailValue = emailElem.value;
+            const errorElem = document.getElementById('razrErrorEmail');
+
+            let errorCount = 0;
+            if ( emailValue ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnerror ) {
+                    errorElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+
+        function validCatalog(focusOnError) {
+            const catalogElem = document.forms.ourSite.elements.catalog;
+            const catalogValue = catalogElem.value;
+            const errorElem = document.getElementById('razrErrorCatalog');
+            let errorCount = 0;
+            if ( catalogValue ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    errorElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+
+        function validPlacement(focusOnError) {
+            const placementElem = document.forms.ourSite.elements.payment;
+            const placementValue = placementElem.value;
+            const errorElem = document.getElementById('razrErrorRadio');
+            for ( let i = 0; i < placementElem.length; i++ ) {
+                if ( placementElem[i].type === 'radio' && placementElem[i].checked ) {
+                    placementElem.onchange;
+                }
+            }
+            let errorCount = 0;
+            if ( placementValue ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    errorElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+
+        function validCheck(focusOnError) {
+            const checkElem = document.forms.ourSite.elements.votes;
+            const errorElem = document.getElementById('razrErrorCheck');
+            let errorCount = 0;
+            if ( checkElem.checked ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    errorElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+
+        function validDescr(focusOnError) {
+            const descrElem = document.forms.ourSite.elements.description;
+            const descrValue = descrElem.value;
+            const errorElem = document.getElementById('razrErrorDescription');
+
+            let errorCount = 0;
+            if ( descrValue ) {
+                errorElem.innerHTML = '';
+            } else {
+                errorElem.innerHTML = 'Заполните поле!';
+                if ( focusOnError ) {
+                    errorElem.focus();
+                }
+                errorCount++;
+            }
+            return errorCount;
+        }
+        function formValid(eo) { // Задача функции - валидировать всю форму
+            eo = eo || window.event;
+            let errorCount = 0; 
+            errorCount += validRazr(!errorCount);
+            errorCount += validNameSite(!errorCount);
+            errorCount += validUrl(!errorCount);
+            errorCount += validDate(!errorCount);
+            errorCount += validPeople(!errorCount);
+            errorCount += validEmail(!errorCount);
+            errorCount += validCatalog(!errorCount);
+            errorCount += validPlacement(!errorCount);
+            errorCount += validCheck(!errorCount);
+            errorCount += validDescr(!errorCount);
+            if ( errorCount ) {
+                eo.preventDefault(); // отмена отправки на сервер
+            }
+        }
+    </script>
+</body>
+</html>
