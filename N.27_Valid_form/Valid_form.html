@@ -12,65 +12,66 @@
     </style>
 </head>
 <body>
-    <form name="ourSite" method="post" action="https://fe.it-academy.by/TestForm.php" onclick="formValid(eo)" onsubmit="formValid()">
+    <form name="ourSite" method="post" action="https://fe.it-academy.by/TestForm.php"  onclick="formValid(eo)" onsubmit="formValid()">
         <div >Для внесения вашего сайта в каталог, заполните форму:</div><br>
         <label>Разработчики:
-            <input type="text" name="developers" onblur="false">
+            <input type="text" name="developers" onblur="validRazr()">
             <span class="color" id="razrError"></span> <!-- ошибка -->
         </label><br>
         <label>Название сайта:
-            <input type="text" name="siteName" onblur="false">
+            <input type="text" name="siteName" onblur="validNameSite()">
             <span class="color" id="razrErrorSite"></span> <!-- ошибка -->
         </label><br>
         <label>URL сайта:
-            <input type="text" name="urlSite" onblur="false">
+            <input type="text" name="urlSite" onblur="validUrl()">
             <span class="color" id="razrErrorUrl"></span> <!-- ошибка -->
         </label><br>
         <label>Дата запуска сайта:
-            <input type="date" name="dateStart" onblur="false">
+            <input type="date" name="dateStart" onblur="validDate()">
             <span class="color" id="razrErrorDate"></span> <!-- ошибка -->
         </label><br>
         <label>Посетителей в сутки:
-            <input type="number" name="people" onblur="false">
+            <input type="number" name="people" onblur="validPeople()">
             <span class="color" id="razrErrorCount"></span> <!-- ошибка -->
         </label><br>
         <label>E-mail для связи:
-            <input type="email" name="email" onblur="false">
+            <input type="email" name="email" onblur="validEmail()">
             <span class="color" id="razrErrorEmail"></span> <!-- ошибка -->
         </label><br>
         <label>Рубрика каталога:
-            <select name="catalog" onblur="false">
-                <option>здоровье</option>
-                <option>домашний уют</option>
-                <option>бытовая техника</option>
+            <select name="catalog" onblur="validCatalog()">
+                <option value="0" style="display:none">Выбрать</option>
+                <option value="1">здоровье</option>
+                <option value="2">домашний уют</option>
+                <option value="3">бытовая техника</option>
             </select>
             <span class="color" id="razrErrorCatalog"></span> <!-- ошибка -->
         </label><br>
         <label>Размещение:
-            <input type="radio" name="payment">бесплатное
-             <input type="radio" name="payment">платное
-            <input type="radio" name="payment">VIP
+            <input type="radio" name="payment" onblur="validPlacement()">бесплатное
+             <input type="radio" name="payment" onblur="validPlacement()">платное
+            <input type="radio" name="payment" onblur="validPlacement()">VIP
             <span class="color" id="razrErrorRadio"></span> <!-- ошибка -->
         </label><br>
         <label>Разрешить отзывы:
-            <input type="checkbox" name="votes" onchange="validCheck(focusOnError)">
+            <input type="checkbox" name="votes" onblur="validCheck()">
             <span class="color" id="razrErrorCheck"></span> <!-- ошибка -->
         </label><br>
         <label>Описание сайта:
-            <textarea name="description" onblur="false"></textarea>
+            <textarea name="description" onblur="validDescr()"></textarea>
             <span class="color" id="razrErrorDescription"></span> <!-- ошибка -->
         </label><br>
         <input type="submit" name="button" value="Опубликовать">
     </form>
     <script>
         function validRazr(focusOnError) { // аргумент в скобках, параметр на фокусирование
-            const razrElem = document.forms.ourSite.elements.developers;
+            const razrElem = document.forms.ourSite.elements.developers; // тег
             const razrValue = razrElem.value; // значение
             const errorElem = document.getElementById('razrError'); // ошибку находим
-
             let errorCount = 0; // подсчет ошибок, начиная с нуля
             if ( razrValue ) { // проверка если не пустое
                 errorElem.innerHTML = '';
+
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
                 if ( focusOnError ) {
@@ -80,6 +81,7 @@
             }
             return errorCount;
         }
+
         function validNameSite(focusOnError) {
             const nameSiteElem = document.forms.ourSite.elements.siteName;
             const nameSiteValue = nameSiteElem.value;
@@ -170,12 +172,14 @@
             return errorCount;
         }
 
+
         function validCatalog(focusOnError) {
             const catalogElem = document.forms.ourSite.elements.catalog;
             const catalogValue = catalogElem.value;
             const errorElem = document.getElementById('razrErrorCatalog');
+
             let errorCount = 0;
-            if ( catalogValue ) {
+            if ( catalogValue !== '0' ) {
                 errorElem.innerHTML = '';
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
@@ -187,10 +191,11 @@
             return errorCount;
         }
 
-        function validPlacement(focusOnError) {
+        function validPlacement(scrollOnError) {
             const placementElem = document.forms.ourSite.elements.payment;
             const placementValue = placementElem.value;
             const errorElem = document.getElementById('razrErrorRadio');
+
             for ( let i = 0; i < placementElem.length; i++ ) {
                 if ( placementElem[i].type === 'radio' && placementElem[i].checked ) {
                     placementElem.onchange;
@@ -201,24 +206,25 @@
                 errorElem.innerHTML = '';
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
-                if ( focusOnError ) {
-                    errorElem.focus();
+                if ( scrollOnError ) {
+                    errorElem.scrollIntoView();
                 }
                 errorCount++;
             }
             return errorCount;
         }
 
-        function validCheck(focusOnError) {
+        function validCheck(scrollOnError) {
             const checkElem = document.forms.ourSite.elements.votes;
             const errorElem = document.getElementById('razrErrorCheck');
+
             let errorCount = 0;
             if ( checkElem.checked ) {
                 errorElem.innerHTML = '';
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
-                if ( focusOnError ) {
-                    errorElem.focus();
+                if ( scrollOnError ) {
+                    errorElem.scrollIntoView();
                 }
                 errorCount++;
             }
@@ -245,7 +251,7 @@
         function formValid(eo) { // Задача функции - валидировать всю форму
             eo = eo || window.event;
             let errorCount = 0; 
-            errorCount += validRazr(!errorCount);
+            errorCount += validRazr(!errorCount); // результат равен true если errorCount = 0;
             errorCount += validNameSite(!errorCount);
             errorCount += validUrl(!errorCount);
             errorCount += validDate(!errorCount);
@@ -255,7 +261,7 @@
             errorCount += validPlacement(!errorCount);
             errorCount += validCheck(!errorCount);
             errorCount += validDescr(!errorCount);
-            if ( errorCount ) {
+            if ( errorCount ) { // если была хоть одна ошибка
                 eo.preventDefault(); // отмена отправки на сервер
             }
         }
