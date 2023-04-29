@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=UTF-8>
+    <title>drag&amp;drop</title>
+</head>
+    <body style='min-height: 100vh'>
+        <img src='http://fe.it-academy.by/Sites/0000007/sax.jpg'>
+        <img src='http://fe.it-academy.by/Sites/0000007/Yin_and_Yang.png' width=100>
+        <img src='http://fe.it-academy.by/Sites/0000007/Man-and-woman.png' width=150>
+        <img src='http://fe.it-academy.by/Sites/0000007/No_smoking.png' style='padding-left: 50px'>
+    <script>
+        window.onload = posit;
+
+        function posit() {
+            const images = document.getElementsByTagName('img');
+            for (const image of images) {  // координаты картинки
+                image.style.left = image.offsetLeft + 'px';
+                image.style.top = image.offsetTop + 'px';
+            }
+            for (const image of images) {
+                image.style.position = 'absolute';
+                image.addEventListener('mousedown', mouseDown);
+                image.addEventListener('mouseup', mouseUp);
+            }
+        }
+        let shiftX, shiftY; // разница между углом верхним левым и координатой мыши
+        let draggedImage = null; // запомнить какую картинку перетаскиваем
+        function mouseDown(eo) {
+            eo = eo || window.event;
+            draggedImage = eo.target;
+            shiftX = eo.pageX - draggedImage.offsetLeft; // разница между углом верхним левым и координатой мыши
+            shiftY = eo.pageY - draggedImage.offsetTop; // разница между углом верхним левым и координатой мыши
+            window.addEventListener('mousemove', mouseMove);
+        }
+        function mouseUp(eo) {
+            eo = eo || window.event;
+            draggedImage = null;
+            window.removeEventListener('mousemove', mouseMove);
+        }
+        function mouseMove(eo) {
+            console.log('Перетаскивание')
+            eo = eo || window.event;
+            if ( draggedImage ) { // проверка
+                draggedImage.style.left = (eo.pageX - shiftX) + 'px';
+                draggedImage.style.top = (eo.pageY - shiftY) + 'px';
+            }
+        }
+    </script>
+    </body>
+</html>

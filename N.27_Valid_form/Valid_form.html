@@ -39,8 +39,8 @@
             <span class="color" id="razrErrorEmail"></span> <!-- ошибка -->
         </label><br>
         <label>Рубрика каталога:
-            <select name="catalog" onblur="validCatalog()">
-                <option value="0" style="display:none">Выбрать</option>
+            <select name="catalog" onchange="validCatalog()">
+                <option value="0">Выбрать</option>
                 <option value="1">здоровье</option>
                 <option value="2">домашний уют</option>
                 <option value="3">бытовая техника</option>
@@ -48,17 +48,17 @@
             <span class="color" id="razrErrorCatalog"></span> <!-- ошибка -->
         </label><br>
         <label>Размещение:
-            <input type="radio" name="payment" onblur="validPlacement()">бесплатное
-             <input type="radio" name="payment" onblur="validPlacement()">платное
-            <input type="radio" name="payment" onblur="validPlacement()">VIP
+            <input type="radio" name="payment" onchange="validPlacement(false)">бесплатное
+             <input type="radio" name="payment" onchange="validPlacement(fale)">платное
+            <input type="radio" name="payment" onchange="validPlacement(false)">VIP
             <span class="color" id="razrErrorRadio"></span> <!-- ошибка -->
         </label><br>
-        <label>Разрешить отзывы:
-            <input type="checkbox" name="votes" onblur="validCheck()">
+        <label for="check">Разрешить отзывы:
+            <input id="check" type="checkbox" name="votes" onchange="validCheck(false)">
             <span class="color" id="razrErrorCheck"></span> <!-- ошибка -->
         </label><br>
         <label>Описание сайта:
-            <textarea name="description" onblur="validDescr()"></textarea>
+            <textarea name="description" onchange="validDescr(false)"></textarea>
             <span class="color" id="razrErrorDescription"></span> <!-- ошибка -->
         </label><br>
         <input type="submit" name="button" value="Опубликовать">
@@ -68,10 +68,10 @@
             const razrElem = document.forms.ourSite.elements.developers; // тег
             const razrValue = razrElem.value; // значение
             const errorElem = document.getElementById('razrError'); // ошибку находим
+
             let errorCount = 0; // подсчет ошибок, начиная с нуля
             if ( razrValue ) { // проверка если не пустое
                 errorElem.innerHTML = '';
-
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
                 if ( focusOnError ) {
@@ -154,7 +154,7 @@
             return errorCount;
         }
 
-        function validEmail(focusOnerror) {
+        function validEmail(focusOnError) {
             const emailElem = document.forms.ourSite.elements.email;
             const emailValue = emailElem.value;
             const errorElem = document.getElementById('razrErrorEmail');
@@ -164,14 +164,13 @@
                 errorElem.innerHTML = '';
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
-                if ( focusOnerror ) {
-                    errorElem.focus();
+                if ( focusOnError ) {
+                    emailElem.focus();
                 }
                 errorCount++;
             }
             return errorCount;
         }
-
 
         function validCatalog(focusOnError) {
             const catalogElem = document.forms.ourSite.elements.catalog;
@@ -184,20 +183,20 @@
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
                 if ( focusOnError ) {
-                    errorElem.focus();
+                    catalogElem.focus();
                 }
                 errorCount++;
             }
             return errorCount;
         }
 
-        function validPlacement(scrollOnError) {
+        function validPlacement(focusOnError) {
             const placementElem = document.forms.ourSite.elements.payment;
             const placementValue = placementElem.value;
             const errorElem = document.getElementById('razrErrorRadio');
 
             for ( let i = 0; i < placementElem.length; i++ ) {
-                if ( placementElem[i].type === 'radio' && placementElem[i].checked ) {
+                if ( placementElem[i].type === 'radio' || placementElem[i].checked ) {
                     placementElem.onchange;
                 }
             }
@@ -206,27 +205,29 @@
                 errorElem.innerHTML = '';
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
-                if ( scrollOnError ) {
-                    errorElem.scrollIntoView();
+                if ( focusOnError ) {
+                    placementElem.focus();
                 }
                 errorCount++;
             }
             return errorCount;
         }
 
-        function validCheck(scrollOnError) {
+        function validCheck(focusOnError) {
             const checkElem = document.forms.ourSite.elements.votes;
+            const checkValue = checkElem.checked;
             const errorElem = document.getElementById('razrErrorCheck');
 
             let errorCount = 0;
-            if ( checkElem.checked ) {
+            if ( checkValue ) {
                 errorElem.innerHTML = '';
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
-                if ( scrollOnError ) {
-                    errorElem.scrollIntoView();
+                if ( focusOnError ) {
+                    checkElem.scrollIntoView();
                 }
                 errorCount++;
+                return false;
             }
             return errorCount;
         }
@@ -242,7 +243,7 @@
             } else {
                 errorElem.innerHTML = 'Заполните поле!';
                 if ( focusOnError ) {
-                    errorElem.focus();
+                    descrElem.focus();
                 }
                 errorCount++;
             }
