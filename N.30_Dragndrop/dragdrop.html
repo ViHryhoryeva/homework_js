@@ -10,6 +10,7 @@
         <img src='http://fe.it-academy.by/Sites/0000007/Man-and-woman.png' width=150>
         <img src='http://fe.it-academy.by/Sites/0000007/No_smoking.png' style='padding-left: 50px'>
     <script>
+
         window.onload = posit;
 
         function posit() {
@@ -29,12 +30,14 @@
         function mouseDown(eo) {
             eo = eo || window.event;
             draggedImage = eo.target;
+            draggedImage.style.zIndex = 1000;
             shiftX = eo.pageX - draggedImage.offsetLeft; // разница между углом верхним левым и координатой мыши
             shiftY = eo.pageY - draggedImage.offsetTop; // разница между углом верхним левым и координатой мыши
             window.addEventListener('mousemove', mouseMove);
         }
         function mouseUp(eo) {
             eo = eo || window.event;
+            draggedImage.style.zIndex = 0;
             draggedImage = null;
             window.removeEventListener('mousemove', mouseMove);
         }
@@ -45,6 +48,7 @@
                 draggedImage.style.left = (eo.pageX - shiftX) + 'px';
                 draggedImage.style.top = (eo.pageY - shiftY) + 'px';
             }
+            eo.preventDefault();
         }
     </script>
     </body>
