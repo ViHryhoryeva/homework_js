@@ -10,7 +10,7 @@
         <img src='http://fe.it-academy.by/Sites/0000007/Man-and-woman.png' width=150>
         <img src='http://fe.it-academy.by/Sites/0000007/No_smoking.png' style='padding-left: 50px'>
     <script>
-
+        let zIndexElem = 1000;
         window.onload = posit;
 
         function posit() {
@@ -30,24 +30,26 @@
         function mouseDown(eo) {
             eo = eo || window.event;
             draggedImage = eo.target;
-            draggedImage.style.zIndex = 1000;
+            draggedImage.style.zIndex = zIndexElem;
             shiftX = eo.pageX - draggedImage.offsetLeft; // разница между углом верхним левым и координатой мыши
             shiftY = eo.pageY - draggedImage.offsetTop; // разница между углом верхним левым и координатой мыши
             window.addEventListener('mousemove', mouseMove);
         }
         function mouseUp(eo) {
             eo = eo || window.event;
-            draggedImage.style.zIndex = 0;
+            draggedImage.style.zIndex = zIndexElem;
+            zIndexElem += 1;
             draggedImage = null;
             window.removeEventListener('mousemove', mouseMove);
         }
         function mouseMove(eo) {
             console.log('Перетаскивание')
             eo = eo || window.event;
+            
             if ( draggedImage ) { // проверка
                 draggedImage.style.left = (eo.pageX - shiftX) + 'px';
                 draggedImage.style.top = (eo.pageY - shiftY) + 'px';
-            }
+            }  
             eo.preventDefault();
         }
     </script>
