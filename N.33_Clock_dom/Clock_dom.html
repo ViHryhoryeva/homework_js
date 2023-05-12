@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock_dom</title>
+    <style>
+        #clock {
+            display: none;
+            position: absolute;
+            border-radius: 50%;
+            background-color: darkkhaki;
+        }
+        .hour {
+            display: block;
+            position: absolute;
+            border-radius: 50%;
+            background-color: coral;
+        }
+        .hand {
+            border-radius: 23%;
+            position: absolute;
+            background-color: brown;
+            transform-origin: center bottom 0;
+        }
+        .digit {
+            position: absolute;
+        }
+        #digitalClock {
+            position: absolute;
+            border: transparent;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"></div>
+
+    <form id="form" name="formClock" method="post" onclick="event.preventDefault()">
+        <input type="number" name="intervalD" onblur="validClockForForm()">
+        <input class="btn" type="submit" name="button" onclick="buildClock()" value="Построить часы">
+        <span id="error"></span>
+    </form>
+
+    <script>
+        const HOURS = 12;
+
+        const DIGITAL_CLOCK_WIDTH = 16; // %
+        const DIGITAL_CLOCK_HEIGHT = 20; // %
+
+        const ANGLE_PER_HOUR = 30; // deg
+        const HOUR_POINT_DIAMETER = 10; // % относительно основного круга
+        const HOUR_DIGIT_SIZE = 70; // % относительно часового круга
+
+        const HOUR_HAND_WIDTH = 8; // px
+        const MINUTE_HAND_WIDTH = 6; // px
+        const SECOND_HAND_WIDTH = 4; // px
+
+        const HOUR_HAND_LENGTH = 40; // % относительно основного круга
+        const MINUTE_HAND_LENGTH = 60; // % относительно основного круга
+        const SECOND_HAND_LENGTH = 80; // % относительно основного круга
+
+        let form = document.getElementById('form');
+        let clock = document.getElementById("clock");
+
+        function buildClock() {
+            const diameter = document.forms.formClock.elements.intervalD.value;
+            let isValid = validClock(diameter);
+            if ( isValid ) {
+                clock.style.display = "block";
+                form.style.display = "none";
+
+                drawCircle(diameter);
+                drawHours(diameter);
+                drawDigitalClock(diameter);
+                drawHands(diameter);
+                setTime();
+                run();
+
+            } else {
+                console.log("Ошибка валидации");
+            }
+        }
+
+        function drawCircle(diameter) {
+            console.log(`Часы с диаметром: ${diameter}`);
+
+            clock.style.width = diameter + 'px';
+            clock.style.height = diameter + 'px';
+        }
+
+        function drawHours(diameter) {
+            const hourDiameterInPx = diameter * HOUR_POINT_DIAMETER / 100;
+            const radiusClock = diameter / 2;
+            const clockCenterX = clock.offsetLeft + clock.offsetWidth / 2;
+            const clockCenterY = clock.offsetTop + clock.offsetHeight / 2;
+
+            for (let i = 1, angleInDegrees = 30; i <= HOURS; i++, angleInDegrees += ANGLE_PER_HOUR) {
+
+                let angle = angleInDegrees / 180 * Math.PI;
+
+                let hourCenterX = clockCenterX + (radiusClock - hourDiameterInPx) * Math.sin(angle);
+                let hourCenterY = clockCenterY - (radiusClock - hourDiameterInPx) * Math.cos(angle);
+
+                let hourElement = document.createElement('div');
+                hourElement.classList.add('hour');
+                hourElement.style.width = hourDiameterInPx + 'px';
+                hourElement.style.height = hourDiameterInPx + 'px';
+                hourElement.style.left = Math.round(hourCenterX - (hourDiameterInPx / 2 + clock.offsetLeft)) + 'px';
+                hourElement.style.top = Math.round(hourCenterY - (hourDiameterInPx / 2 + clock.offsetTop)) + 'px';
+
+                let digitElement = document.createElement('p');
+                digitElement.classList.add('digit');
+                digitElement.textContent = i + '';
+                digitElement.style.fontSize = Math.round((hourDiameterInPx * 80) / 100) + 'px';
+                digitElement.style.margin = '0px';
+                digitElement.style.padding = '0px';
+                digitElement.style.top = Math.round((hourDiameterInPx * 5) / 100) + 'px';
+                if (i < 10) {
+                    digitElement.style.left = Math.round(hourDiameterInPx * 30 / 100) + 'px';
+                } else {
+                    digitElement.style.left = Math.round(hourDiameterInPx * 10 /100) + 'px';
+                }
+
+                hourElement.appendChild(digitElement);
+                clock.appendChild(hourElement);
+            }
+        }
+
+        function drawHands(diameter) {
+            const hourHandLength = diameter * HOUR_HAND_LENGTH / 100 / 2; // в px
+            const minuteHandLength = diameter * MINUTE_HAND_LENGTH / 100 / 2; // в px
+            const secondHandLength = diameter * SECOND_HAND_LENGTH / 100 / 2; // в px
+
+            const clockCenterX = clock.offsetWidth / 2;
+            const clockCenterY = clock.offsetHeight / 2;
+
+            let hourHandStartX = clockCenterX - HOUR_HAND_WIDTH / 2;
+            let hourHandStartY = clockCenterY - hourHandLength;
+
+            let minuteHandStartX = clockCenterX - MINUTE_HAND_WIDTH / 2;
+            let minuteHandStartY = clockCenterY - minuteHandLength;
+
+            let secondHandStartX = clockCenterX - SECOND_HAND_WIDTH / 2;
+            let secondHandStartY = clockCenterY - secondHandLength;
+
+            let hourHand = document.createElement('div');
+            hourHand.classList.add('hand');
+            hourHand.id = 'hourHand';
+            hourHand.style.left = hourHandStartX +'px';
+            hourHand.style.top = hourHandStartY +'px';
+            hourHand.style.width = HOUR_HAND_WIDTH + 'px';
+            hourHand.style.height = hourHandLength + 'px';
+
+            let minuteHand = document.createElement('div');
+            minuteHand.classList.add('hand');
+            minuteHand.id = 'minuteHand';
+            minuteHand.style.left = minuteHandStartX +'px';
+            minuteHand.style.top = minuteHandStartY +'px';
+            minuteHand.style.width = MINUTE_HAND_WIDTH + 'px';
+            minuteHand.style.height = minuteHandLength + 'px';
+
+            let secondHand = document.createElement('div');
+            secondHand.classList.add('hand');
+            secondHand.id = 'secondHand';
+            secondHand.style.left = secondHandStartX +'px';
+            secondHand.style.top = secondHandStartY +'px';
+            secondHand.style.width = SECOND_HAND_WIDTH + 'px';
+            secondHand.style.height = secondHandLength + 'px';
+
+            clock.appendChild(hourHand);
+            clock.appendChild(minuteHand);
+            clock.appendChild(secondHand);
+        }
+
+        function drawDigitalClock(diameter) {
+            let digitalClock = document.createElement('p');
+            digitalClock.id = 'digitalClock';
+            digitalClock.style.fontSize = Math.round((diameter * 8) / 100) + 'px';
+            digitalClock.style.margin = '0px'
+            digitalClock.style.padding = '0px'
+            digitalClock.style.top = Math.round(diameter * 30 / 100) + 'px';
+            digitalClock.style.left = Math.round(diameter * 30 / 100) + 'px';
+
+            clock.appendChild(digitalClock);
+        }
+        function run() {
+            setInterval(setTime,1000);
+        }
+        function setTime() {
+            let time = currentTime();
+            console.log(time);
+            let digitalClock = document.getElementById("digitalClock")
+            digitalClock.textContent = time;
+            clock.value = time;
+
+            let timeArrayHMS = time.split(':')
+            let hDeg = 360 / 12 * (parseInt(timeArrayHMS[0]) + parseInt(timeArrayHMS[1]) / 60 );
+            let minDeg = timeArrayHMS[1] * 6;
+            let secDeg = timeArrayHMS[2] * 6;
+
+            const hourHand = document.getElementById("hourHand");
+            hourHand.style.transform = `rotate(${hDeg}deg)`
+            const minuteHand = document.getElementById("minuteHand");
+            minuteHand.style.transform = `rotate(${minDeg}deg)`
+            const secondHand = document.getElementById("secondHand");
+            secondHand.style.transform = `rotate(${secDeg}deg)`
+        }
+
+        function validClockForForm(interval) {
+            const clockElem = document.forms.formClock.elements.intervalD.value;
+            const errorElem = document.getElementById('error');
+
+            let isValid = false;
+            if ( validClock(clockElem) ) {
+                errorElem.innerHTML = '';
+                return true;
+            } else {
+                errorElem.innerHTML = 'Не верно введен диаметр часов!';
+                if ( interval ) {
+                    clockElem.focus();
+                }
+            }
+            return isValid;
+        }
+
+        function validClock(diameter) {
+            return diameter >= 200 && diameter <= 800;
+        }
+
+        function currentTime() {
+            const time = new Date();
+            let hour = time.getHours();
+            let min = time.getMinutes();
+            let sec = time.getSeconds();
+
+            if ( hour <= 9 ) {
+                hour = '0' + hour;
+            }
+            if ( min <= 9 ) {
+                min = '0' + min;
+            }
+            if ( sec <= 9 ) {
+                sec = '0' + sec;
+            }
+            return `${hour} : ${min} : ${sec}`;
+
+        }
+    </script>
+</body>
+</html>
