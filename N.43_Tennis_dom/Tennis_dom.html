@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tennis_dom</title>
+    <style>
+        body {
+            width: 600px;
+        }
+        #scoreBoard {
+            padding-bottom: 20px;
+            text-align: center;
+        }
+        #leftRacket {
+            background: blue;
+            position: absolute;
+            width: 10px;
+            height: 100px;
+            left: 0;
+            top: 20px;
+        }
+        #rightRacket {
+            background: darkslateblue;
+            position: absolute;
+            width: 10px;
+            height: 100px;
+            right: 0;
+            top: 200px;
+        }
+        .btn {
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 18px;
+            color: dimgrey;
+            border: solid 3px dimgrey;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input class="btn" type="button" value="Старт!" onclick='start()'>
+    <div id="scoreBoard">
+        <div id="leftPlayer"></div>
+        <div id="rightPlayer"></div>
+    </div>
+
+    <div id="tennis">
+        <div id="ball"></div>
+        <div id="leftRacket"></div>
+        <div id="rightRacket"></div>
+    </div>
+
+    <script>
+        let gameState = 0; // начало игры
+        // если gameState = 1, то мяч летает по полю
+        // если gameState = 2, то мяч у стены и забит гол
+
+        let scoreLeftPlayer = 0;
+        let scoreRightPlayer = 0;
+
+        let animationFrameId;
+
+        buildGameElements();
+
+        racketH = {
+            leftRacketPosX : 0,
+            leftRacketPosY : 30,
+            leftRacketSpeedX : 0,
+            leftRacketSpeedY : 0,
+
+            rightRacketPosX : 590,
+            rightRacketPosY : 100,
+            rightRacketSpeedX : 0,
+            rightRacketSpeedY : 0,
+
+            update : function () {
+                const leftRacketElem = document.getElementById('leftRacket');
+                leftRacketElem.style.left = Math.round(this.leftRacketPosX) + 'px';
+                leftRacketElem.style.top = Math.round(this.leftRacketPosY) + 'px';
+
+                const rightRacketElem = document.getElementById('rightRacket');
+                rightRacketElem.style.left = Math.round(this.rightRacketPosX) + 'px';
+                rightRacketElem.style.top = Math.round(this.rightRacketPosY) + 'px';
+
+            }
+        }
+        const racketAreaH = {
+            width: 10,
+            height: 100,
+        };
+        racketH.update();
+
+        let ballH = {
+            posX : 300, //
+            posY : 200, //
+            speedX : 2, // скорость
+            speedY : 2, // скорость
+            accelX : 0, // ускорение
+            accelY : 0, // ускорение
+            width : 25,
+            height: 25,
+
+            update : function() {
+                const ballElem = document.getElementById('ball');
+                ballElem.style.left = Math.round(this.posX) + 'px';
+                ballElem.style.top = Math.round(this.posY) + 'px';
+                ballElem.style.width = Math.round(this.width) + 'px';
+                ballElem.style.height = Math.round(this.height) + 'px';
+                ballElem.style.position = 'absolute';
+                ballElem.style.backgroundColor = 'coral';
+                ballElem.style.borderRadius = '50%';
+            }
+        }
+        const areaH = {
+            width : 600,
+            height : 400,
+        }
+
+
+        // работаем с shift, ctrl, arrowUp, arrowDown
+        window.addEventListener('keydown', leftRacketUpIsPressed, false);
+        function leftRacketUpIsPressed(eo) {
+            eo = eo || window.event;
+            if ( eo.code === 'ShiftLeft' ) {
+                racketH.leftRacketSpeedY = -2;
+            }
+        }
+
+        window.addEventListener('keyup', leftRacketUpIsNotPressed, false);
+        function leftRacketUpIsNotPressed(eo) {
+            eo = eo || window.event;
+            eo.preventDefault();
+            if ( eo.code === 'ShiftLeft' ) {
+                racketH.leftRacketSpeedY = 0;
+            }
+        }
+
+        window.addEventListener('keydown', leftRacketDownIsPressed, false);
+        function leftRacketDownIsPressed(eo) {
+            eo = eo || window.event;
+            eo.preventDefault();
+            if ( eo.code === 'ControlLeft' ) {
+                racketH.leftRacketSpeedY = 2;
+            }
+        }
+
+        window.addEventListener('keyup', leftRacketDownIsNotPressed, false);
+        function leftRacketDownIsNotPressed(eo) {
+            eo = eo || window.event;
+            eo.preventDefault();
+            if ( eo.code === 'ControlLeft' ) {
+                racketH.leftRacketSpeedY = 0;
+            }
+        }
+
+        window.addEventListener('keydown', rightRacketUpIsPressed, false);
+        function rightRacketUpIsPressed(eo) {
+            eo = eo || window.event;
+            eo.preventDefault();
+            if ( eo.code === 'ArrowUp' ) {
+                racketH.rightRacketSpeedY = -2;
+            }
+        }
+
+        window.addEventListener('keyup', rightRacketUpIsNotPressed, false);
+        function rightRacketUpIsNotPressed(eo) {
+            eo = eo || window.event;
+            eo.preventDefault();
+            if ( eo.code === 'ArrowUp' ) {
+                racketH.rightRacketSpeedY = 0;
+            }
+        }
+
+        window.addEventListener('keydown', rightRacketDownIsPressed, false);
+        function rightRacketDownIsPressed(eo) {
+            eo = eo || window.event;
+            eo.preventDefault();
+            if ( eo.code === 'ArrowDown' ) {
+                racketH.rightRacketSpeedY = 2;
+            }
+        }
+
+        window.addEventListener('keyup', rightRacketDownIsNotPressed, false);
+        function rightRacketDownIsNotPressed(eo) {
+            eo = eo || window.event;
+            eo.preventDefault();
+            if ( eo.code === 'ArrowDown' ) {
+                racketH.rightRacketSpeedY = 0;
+            }
+        }
+
+        function start() {
+            animationFrameId = requestAnimationFrame(tick);
+            scoreBoardInnerHTML();
+            gameState = 1;
+            if (gameState === 1) {
+                cancelAnimationFrame(animationFrameId);
+                ballH.posX = 300;
+                ballH.posY = 200;
+                ballH.speedX = 1;
+                ballH.speedY = 1;
+                racketH.update();
+                ballH.update();
+                animationFrameId = requestAnimationFrame(tick);
+            }
+        }
+        function tick() {
+            cancelAnimationFrame(animationFrameId)
+            scoreBoardInnerHTML();
+            // работаем с ракетками:
+            racketH.leftRacketPosY += racketH.leftRacketSpeedY;
+
+            // вылетела ли левая ракетка ниже пола?
+            if (racketH.leftRacketPosY >= areaH.height - 100) {
+                racketH.leftRacketPosY = areaH.height - 100;
+            }
+
+            // вылетела ли левая ракетка выше потолка?
+            if (racketH.leftRacketPosY <= 0) {
+                racketH.leftRacketPosY = 0;
+            }
+
+            racketH.rightRacketPosY += racketH.rightRacketSpeedY;
+            // вылетела ли правая ракетка ниже пола?
+            if (racketH.rightRacketPosY >= areaH.height - 100) {
+                racketH.rightRacketPosY = areaH.height - 100;
+            }
+            // вылетела ли правая ракетка выше потолка?
+            if (racketH.rightRacketPosY <= 0) {
+                racketH.rightRacketPosY = 0;
+            }
+
+            // работаем с мячом:
+            ballH.speedX += ballH.accelX;
+            ballH.posX += ballH.speedX;
+            // вылетел ли мяч правее стены?
+            if (ballH.posX + ballH.width >= areaH.width - racketAreaH.width ) {
+
+                if ((ballH.posY > (racketH.rightRacketPosY + racketAreaH.height) || ballH.posY < racketH.rightRacketPosY)) {
+
+                    if (ballH.posX + ballH.width >= areaH.width) {
+                        ballH.speedY = 0;
+                        ballH.speedX = 0;
+
+                        if (gameState !== 2) {
+                            scoreRightPlayer++;
+                        }
+                        gameState = 2;
+                    }
+                } else if (ballH.posX + ballH.width >= areaH.width - racketAreaH.width && gameState !== 2) {
+                        ballH.speedX =- ballH.speedX;
+                        ballH.posX = areaH.width - ballH.width - racketAreaH.width;
+                } else if (gameState !== 2) {
+                        ballH.speedX =- ballH.speedX;
+                        ballH.posX = areaH.width - ballH.width;
+                }
+            }
+            // вылетел ли мяч левее стены?
+            if (ballH.posX <= racketAreaH.width) {
+
+                if (ballH.posY > (racketH.leftRacketPosY + racketAreaH.height) || ballH.posY < racketH.leftRacketPosY) {
+
+                    if (ballH.posX <= 0) {
+                        ballH.speedY = 0;
+                        ballH.speedX = 0;
+                    }
+
+                        if (gameState !== 2) {
+                            scoreLeftPlayer++;
+                        }
+                        gameState = 2;
+                } else if (ballH.posX <= racketAreaH.width && gameState !== 2) {
+                    ballH.speedX =- ballH.speedX;
+                    ballH.posX = racketAreaH.width;
+                } else if (gameState !== 2) {
+                    ballH.speedX =- ballH.speedX;
+                    ballH.posX = 0;
+                }
+            }
+
+            ballH.speedY += ballH.accelY;
+            ballH.posY += ballH.speedY;
+
+            // вылетел ли мяч ниже пола?
+            if ( ballH.posY + ballH.height > areaH.height ) {
+                ballH.speedY =- ballH.speedY;
+                ballH.posY = areaH.height - ballH.height;
+            }
+
+            // вылетел ли мяч выше потолка?
+            if ( ballH.posY < 0 ) {
+                ballH.speedY =- ballH.speedY;
+                ballH.posY = 0;
+            }
+
+            racketH.update();
+            ballH.update();
+            animationFrameId = requestAnimationFrame(tick);
+
+        }
+        ballH.update();
+
+        function buildGameElements() {
+            buildArea();
+            buildScoreBoard();
+            scoreBoardInnerHTML();
+        }
+
+        function buildArea () {
+            const tennisElem = document.getElementById('tennis'); // поле для тенниса
+            tennisElem.style.width = '600px',
+            tennisElem.style.height = '400px',
+            tennisElem.style.position = 'absolute',
+            tennisElem.style.border = 'solid 1px black',
+            tennisElem.style.backgroundColor = 'aquamarine';
+        }
+
+        function buildScoreBoard() {
+            let scoreBoard = document.getElementById('scoreBoard'), // счет игры
+            leftPlayer = document.getElementById('leftPlayer'),
+            rightPlayer = document.getElementById('rightPlayer'),
+            leftRacket = document.getElementById('leftRacket'),
+            rightRacket = document.getElementById('rightRacket');
+        }
+
+        function scoreBoardInnerHTML() {
+            let scoreBoardElement = document.getElementById('scoreBoard')
+            scoreBoardElement.innerHTML = scoreLeftPlayer + ':' + scoreRightPlayer;
+            scoreBoardElement.style.fontSize = '32px';
+        }
+
+    </script>
+</body>
+</html>
