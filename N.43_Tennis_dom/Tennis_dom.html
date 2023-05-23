@@ -57,8 +57,6 @@
         let scoreLeftPlayer = 0;
         let scoreRightPlayer = 0;
 
-        let animationFrameId;
-
         buildGameElements();
 
         racketH = {
@@ -189,22 +187,20 @@
         }
 
         function start() {
-            animationFrameId = requestAnimationFrame(tick);
+            requestAnimationFrame(tick);
             scoreBoardInnerHTML();
             gameState = 1;
             if (gameState === 1) {
-                cancelAnimationFrame(animationFrameId);
                 ballH.posX = 300;
                 ballH.posY = 200;
                 ballH.speedX = 1;
                 ballH.speedY = 1;
                 racketH.update();
                 ballH.update();
-                animationFrameId = requestAnimationFrame(tick);
+                requestAnimationFrame(tick);
             }
         }
         function tick() {
-            cancelAnimationFrame(animationFrameId)
             scoreBoardInnerHTML();
             // работаем с ракетками:
             racketH.leftRacketPosY += racketH.leftRacketSpeedY;
@@ -294,7 +290,7 @@
 
             racketH.update();
             ballH.update();
-            animationFrameId = requestAnimationFrame(tick);
+            requestAnimationFrame(tick);
 
         }
         ballH.update();
