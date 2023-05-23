@@ -43,8 +43,8 @@
 <body>
     <input class="btn" type="button" value="Старт!" onclick='start()'>
     <div id="scoreBoard">
-        <div id="leftPlayer"></div>
-        <div id="rightPlayer"></div>
+<!--        <div id="leftPlayer"></div>-->
+<!--        <div id="rightPlayer"></div>-->
     </div>
 
     <div id="tennis">
@@ -305,7 +305,6 @@
 
         function buildGameElements() {
             buildArea();
-            buildScoreBoard();
             scoreBoardInnerHTML();
         }
 
@@ -316,14 +315,6 @@
             tennisElem.style.position = 'absolute',
             tennisElem.style.border = 'solid 1px black',
             tennisElem.style.backgroundColor = 'aquamarine';
-        }
-
-        function buildScoreBoard() {
-            let scoreBoard = document.getElementById('scoreBoard'), // счет игры
-            leftPlayer = document.getElementById('leftPlayer'),
-            rightPlayer = document.getElementById('rightPlayer'),
-            leftRacket = document.getElementById('leftRacket'),
-            rightRacket = document.getElementById('rightRacket');
         }
 
         function scoreBoardInnerHTML() {
