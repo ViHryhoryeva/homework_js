@@ -113,7 +113,6 @@
             height : 400,
         }
 
-
         // работаем с shift, ctrl, arrowUp, arrowDown
         window.addEventListener('keydown', leftRacketUpIsPressed, false);
         function leftRacketUpIsPressed(eo) {
@@ -187,17 +186,19 @@
         }
 
         function start() {
-            requestAnimationFrame(tick);
-            scoreBoardInnerHTML();
-            gameState = 1;
-            if (gameState === 1) {
+            if (gameState === 0) {
+                gameState = 1;
+                scoreBoardInnerHTML();
+                requestAnimationFrame(tick);
+            }
+            if (gameState === 2 ) {
+                gameState = 1;
                 ballH.posX = 300;
                 ballH.posY = 200;
                 ballH.speedX = 1;
                 ballH.speedY = 1;
                 racketH.update();
                 ballH.update();
-                requestAnimationFrame(tick);
             }
         }
         function tick() {
@@ -228,6 +229,7 @@
             // работаем с мячом:
             ballH.speedX += ballH.accelX;
             ballH.posX += ballH.speedX;
+
             // вылетел ли мяч правее стены?
             if (ballH.posX + ballH.width >= areaH.width - racketAreaH.width ) {
 
@@ -241,6 +243,7 @@
                             scoreRightPlayer++;
                         }
                         gameState = 2;
+
                     }
                 } else if (ballH.posX + ballH.width >= areaH.width - racketAreaH.width && gameState !== 2) {
                         ballH.speedX =- ballH.speedX;
@@ -264,6 +267,7 @@
                             scoreLeftPlayer++;
                         }
                         gameState = 2;
+
                 } else if (ballH.posX <= racketAreaH.width && gameState !== 2) {
                     ballH.speedX =- ballH.speedX;
                     ballH.posX = racketAreaH.width;
@@ -302,10 +306,10 @@
 
         function buildArea () {
             const tennisElem = document.getElementById('tennis'); // поле для тенниса
-            tennisElem.style.width = '600px',
-            tennisElem.style.height = '400px',
-            tennisElem.style.position = 'absolute',
-            tennisElem.style.border = 'solid 1px black',
+            tennisElem.style.width = '600px';
+            tennisElem.style.height = '400px';
+            tennisElem.style.position = 'absolute';
+            tennisElem.style.border = 'solid 1px black';
             tennisElem.style.backgroundColor = 'aquamarine';
         }
 
