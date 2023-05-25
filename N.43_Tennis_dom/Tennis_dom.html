@@ -114,76 +114,39 @@
         }
 
         // работаем с shift, ctrl, arrowUp, arrowDown
-        window.addEventListener('keydown', leftRacketUpIsPressed, false);
-        function leftRacketUpIsPressed(eo) {
+        window.addEventListener('keydown', function(eo) {
             eo = eo || window.event;
+            eo.preventDefault();
             if ( eo.code === 'ShiftLeft' ) {
                 racketH.leftRacketSpeedY = -2;
             }
-        }
+            else if ( eo.code === 'ControlLeft' ) {
+                racketH.leftRacketSpeedY = 2;
+            }
+            else if ( eo.code === 'ArrowUp' ) {
+                racketH.rightRacketSpeedY = -2;
+            }
+            else if ( eo.code === 'ArrowDown' ) {
+                racketH.rightRacketSpeedY = 2;
+            }
+        });
 
-        window.addEventListener('keyup', leftRacketUpIsNotPressed, false);
-        function leftRacketUpIsNotPressed(eo) {
+        window.addEventListener('keyup', function (eo) {
             eo = eo || window.event;
             eo.preventDefault();
             if ( eo.code === 'ShiftLeft' ) {
                 racketH.leftRacketSpeedY = 0;
             }
-        }
-
-        window.addEventListener('keydown', leftRacketDownIsPressed, false);
-        function leftRacketDownIsPressed(eo) {
-            eo = eo || window.event;
-            eo.preventDefault();
-            if ( eo.code === 'ControlLeft' ) {
-                racketH.leftRacketSpeedY = 2;
-            }
-        }
-
-        window.addEventListener('keyup', leftRacketDownIsNotPressed, false);
-        function leftRacketDownIsNotPressed(eo) {
-            eo = eo || window.event;
-            eo.preventDefault();
-            if ( eo.code === 'ControlLeft' ) {
+            else if ( eo.code === 'ControlLeft' ) {
                 racketH.leftRacketSpeedY = 0;
             }
-        }
-
-        window.addEventListener('keydown', rightRacketUpIsPressed, false);
-        function rightRacketUpIsPressed(eo) {
-            eo = eo || window.event;
-            eo.preventDefault();
-            if ( eo.code === 'ArrowUp' ) {
-                racketH.rightRacketSpeedY = -2;
-            }
-        }
-
-        window.addEventListener('keyup', rightRacketUpIsNotPressed, false);
-        function rightRacketUpIsNotPressed(eo) {
-            eo = eo || window.event;
-            eo.preventDefault();
-            if ( eo.code === 'ArrowUp' ) {
+            else if ( eo.code === 'ArrowUp' ) {
                 racketH.rightRacketSpeedY = 0;
             }
-        }
-
-        window.addEventListener('keydown', rightRacketDownIsPressed, false);
-        function rightRacketDownIsPressed(eo) {
-            eo = eo || window.event;
-            eo.preventDefault();
-            if ( eo.code === 'ArrowDown' ) {
-                racketH.rightRacketSpeedY = 2;
-            }
-        }
-
-        window.addEventListener('keyup', rightRacketDownIsNotPressed, false);
-        function rightRacketDownIsNotPressed(eo) {
-            eo = eo || window.event;
-            eo.preventDefault();
-            if ( eo.code === 'ArrowDown' ) {
+            else if ( eo.code === 'ArrowDown' ) {
                 racketH.rightRacketSpeedY = 0;
             }
-        }
+        });
 
         function start() {
             if (gameState === 0) {
@@ -195,8 +158,8 @@
                 gameState = 1;
                 ballH.posX = 300;
                 ballH.posY = 200;
-                ballH.speedX = 1;
-                ballH.speedY = 1;
+                ballH.speedX = 2;
+                ballH.speedY = 2;
                 racketH.update();
                 ballH.update();
             }
