@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drinks_loc_storage</title>
+    <style>
+        .block {
+            display: flex;
+            flex-direction: row;
+        }
+        input {
+            padding: 5px;
+            cursor: pointer;
+            margin: 10px;
+            width: 300px;
+        }
+        input:hover {
+            box-shadow: 0 0 0 0.25rem #bab2dc;
+            background-color: #bab2dc;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="block">
+        <div class="block1">
+            <div><input type=button value='Ввод информации о напитке' onclick = "addBeverage()"></div>
+            <div><input type=button value='Получение информации о напитке' onclick = "getBeverage()"></div>
+            <div><input type=button value='Удаление информации о напитке' onclick = "deleteBeverage()"></div>
+            <div><input type=button value='Перечень всех напитков' onclick = "getBeverageList()"></div>
+        </div>
+        <div class="block2">
+            <div><input type=button value='Ввод информации о блюде' onclick = "addMeals()"></div>
+            <div><input type=button value='Получение информации о блюде' onclick = "getMeals()"></div>
+            <div><input type=button value='Удаление информации о блюде' onclick = "deleteMeals()"></div>
+            <div><input type=button value='Перечень всех блюд' onclick = "getMealsList()"></div>
+        </div>
+    </div>
+    <script>
+        class LockStorageFunc {
+            constructor(keyName) {
+                this.type = keyName;
+                try {
+                    this.storage = JSON.parse(localStorage[this.type]);
+                }
+                catch ( error ) {
+                    this.storage = {};
+                }
+            }
+            addValue(key, value) {
+                this.storage[key] = value;
+                localStorage[this.type] = JSON.stringify(this.storage);
+            }
+            getValue(key) {
+                return this.storage[key];
+            }
+            deleteValue(key) {
+                let isExist = key in this.storage;
+                if (isExist) {
+                    delete this.storage[key];
+                    localStorage[this.type] = JSON.stringify('storage');
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            getKeys() {
+                console.log()
+                return Object.keys(this.storage);
+            }
+        }
+
+        class Beverage {
+            constructor(nameBeverage, alcoholic, ingredients) {
+                this.nameBeverage = nameBeverage;
+                this.alcoholic = alcoholic;
+                this.ingredients = ingredients;
+            }
+        }
+
+        class Meals {
+            constructor(nameFood, ingredients) {
+                this.nameFood = nameFood;
+                this.ingredients = ingredients;
+            }
+        }
+        let cola = new Beverage('Кола', 'Безалкогольный', 'Сахар, вода, коричневый сахар, сок и натертая цедра апельсинов, лайма и лимона, семена кориандра, цветки лаванды, звездочки бадьяна, ваниль, пол палочки корицы, имбирь, лимонная кислота');
+        let mojito = new Beverage('Мохито', 'Алкогольный', 'Ром белый, напиток «Швепс», лайм, лимон, сахар коричневый, листья мяты, лед');
+        let margarita = new Beverage('Маргорита', 'Алкогольный', 'Текила, трипл-сек (ликер Куантро), сок лайма, долька лайма, соль (по вкусу), лед');
+        let tea = new Beverage('Чай', 'Безалкогольный', 'Крупнолистовой черный чай');
+
+        let salad = new Meals('Греческий салат', 'Сыр фета, болгарский перец, помидоры, огурец, салат-латук, базилик, репчатый лук, маслины, лимон, оливковое масло, соль, черный молотый перец');
+        let soup = new Meals('суп из чечевицы', 'Чечевица, морковь, лук репчатый, сливки, соль, перец черный молотый, вода');
+
+        let beverageStorage = new LockStorageFunc('IsBeverage');
+        let mealsStorage = new LockStorageFunc('IsMeals');
+
+        beverageStorage.addValue(cola);
+        beverageStorage.addValue(mojito);
+        beverageStorage.addValue(margarita);
+        beverageStorage.addValue(tea);
+
+
+        mealsStorage.addValue(salad);
+        mealsStorage.addValue(soup);
+
+        function addBeverage() {
+            const name = prompt('Введите название напитка:');
+            const alcoholic = confirm('Алкогольный ли?');
+            const ingredients = prompt('Ингредиенты:');
+            beverageStorage.addValue(name, { alcoholic, ingredients });
+        }
+
+        function addMeals() {
+            const name = prompt('Введите название блюда:');
+            const ingredients = prompt('Ингредиенты:');
+            mealsStorage.addValue(name, ingredients);
+        }
+        function getBeverage() {
+            const name = prompt('Введите название напитка:');
+            const info = beverageStorage.getValue(name);
+            if ( info !== undefined ) {
+                let isAlcoholic = info.alcoholic ? 'Да' : 'Нет';
+                alert (` Название напитка:  ${name} \n Алкогольный ли?  ${isAlcoholic} \n Ингредиенты:  ${info.ingredients} `);
+            } else {
+                alert ('Такого напитка нет');
+            }
+        }
+        function getMeals() {
+            const name = prompt('Введите название блюда:');
+            const info = mealsStorage.getValue(name);
+            if ( info !== undefined ) {
+                alert (` Название блюда:  ${name} \n Ингредиенты:  ${info} `);
+            } else {
+                alert ('Такого блюда нет');
+            }
+        }
+
+        function deleteBeverage() {
+            const name = prompt('Введите название напитка:');
+            const del = beverageStorage.deleteValue(name);
+            alert( del ? 'Напиток удален' : 'Напиток не удален');
+        }
+
+        function deleteMeals() {
+            const name = prompt('Введите название блюда:');
+            const del = mealsStorage.deleteValue(name);
+            alert( del ? 'Блюдо удалено' : 'Блюдо не удалено');
+        }
+        function getBeverageList() {
+            const beverageList = beverageStorage.getKeys().join();
+            alert(` Список напитков: ${beverageList} `);
+        }
+
+        function getMealsList() {
+            const mealsList = mealsStorage.getKeys().join();
+            alert(` Список блюд: ${mealsList} `);
+        }
+
+    </script>
+</body>
+</html>
