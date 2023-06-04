@@ -1,0 +1,79 @@
+body {
+    display: flex;
+    justify-content: center;
+    background: #666b3a;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.road {
+    background: #414046;
+    width: 400px;
+    height: 100vh;
+    /*border-left: 10px dashed white;*/
+    /*border-right: 10px dashed white;*/
+}
+/*.line {*/
+/*    background: #ffffff;*/
+/*    width: 10px;*/
+/*}*/
+.car {
+    position: absolute;
+    width: 70px;
+    transform: translateY(70vh);
+    z-index: 5;
+}
+.tree {
+    position: absolute;
+    z-index: 10;
+}
+.tree1 {
+    transform: translate(-260px, -5vh);
+    width: 230px;
+}
+.tree2 {
+    transform: translate(-280px, 25vh);
+    width: 250px;
+}
+.tree3 {
+    transform: translate(-250px, 70vh);
+    width: 280px;
+}
+.tree4 {
+    transform: translate(260px, -5vh);
+    width: 230px;
+}
+.tree5 {
+    transform: translate(240px, 30vh);
+    width: 250px;
+}
+.tree6 {
+    transform: translate(280px, 120vh);
+    width: 280px;
+}
+.game-btn {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform .3s ease;
+    z-index: 10;
+}
+.game-btn img {
+    width: 40px;
+}
+.play {
+    display: none;
+}
+.game-btn:hover {
+    transform: scale(1.2);
+}
+.car2 {
+    position: absolute;
+    width: 80px;
+    transform: translate(100px, -100px);
+    z-index: 5;
+}
