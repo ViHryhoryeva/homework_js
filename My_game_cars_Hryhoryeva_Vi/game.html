@@ -9,25 +9,81 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="road"></div>
-    <div class="line"></div>
-    <img class="car" src="images/orange-car.png">
-    <img class="tree tree1" src="images/tree111.png">
-    <img class="tree tree2" src="images/tree111.png">
-    <img class="tree tree3" src="images/tree111.png">
-    <img class="tree tree4" src="images/tree111.png">
-    <img class="tree tree5" src="images/tree111.png">
-    <img class="tree tree6" src="images/tree111.png">
+    <header>
+        <div class="menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <div class="menu">
+        <nav>
+            <ul>
+                <li><button id="game" onclick="window.location.reload()">Играть</button></li>
+                <li><button id="records">Рекорды</button></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="wrapperBlock">
+<!--        <div class="player">-->
+<!--            <label>Ваше имя:</label>-->
+<!--            <input class="name-player" type="text" id='IName'>-->
+<!--            <input type="button" value="Запомнить" class="save" onclick="storeInfo()">-->
+<!--            <br>-->
+<!--            <img src="images/Tesla-Roadster-Download-Free-PNG.png">-->
+<!--        </div>-->
+        <div class="road"></div>
 
-    <img class="car2" src="images/car_pink.png">
-<!--    <img class="coin" src="images/coin.png">-->
+        <img class="car" src="images/orange-car.png">
+        <img class="tree tree1" src="images/tree111.png">
+        <img class="tree tree2" src="images/tree111.png">
+        <img class="tree tree3" src="images/tree111.png">
+        <img class="tree tree4" src="images/tree111.png">
+        <img class="tree tree5" src="images/tree111.png">
+        <img class="tree tree6" src="images/tree111.png">
 
-    <button class="game-btn">
-        <img class="pause" src="images/pause.png">
-        <img class="play" src="images/play.png">
-    </button>
+        <img class="car2" src="images/car_pink.png">
+        <img class="coin" src="images/coin.png">
+
+        <button class="game-btn">
+            <img class="play" src="images/play.png">
+            <img class="pause" src="images/pause.png">
+        </button>
+
+        <div class="game-score">0</div>
+
+<!--        <div class="game-off">-->
+<!--            <div class="end">Конец игры!!!</div>-->
+<!--            <div class="text">Счет игры:-->
+<!--                <span class="text-score">0</span>-->
+<!--            </div>-->
+<!--            <button type="button" class="restart-btn">Начать игру заново</button>-->
+<!--        </div>-->
 
 
-    <script src="javascript.js"></script>
+        <div class="arrow">
+            <img class="arrowLeft" src="images/svg%20(14).svg">
+            <img class="arrowRight" src="images/svg%20(13).svg">
+        </div>
+    </div>
+
+
+    <script src="script/controller.js"></script>
+    <script src="script/storage.js"></script>
+    <script src="script/events.js"></script>
+    <script src="script/engine.js"></script>
+    <script src="script/view.js"></script>
+    <script src="script/model.js"></script>
+    <script src="script/parameters.js"></script>
+    <script src="script/model.js"></script>
+    <script src="script/script.js"></script>
+
+
+
+<!--    <script src="storage.js"></script>-->
+    <!--    <script src="https://fe.it-academy.by/JQ/jquery.js"></script>-->
+<!--    <script src="burger.js"></script>-->
+    <!--    <script src="header.js"></script>-->
+<!--    <script src="controller.js"></script>-->
 </body>
 </html>
