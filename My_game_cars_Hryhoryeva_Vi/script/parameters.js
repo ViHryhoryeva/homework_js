@@ -1,6 +1,18 @@
-let state = 1; //начало игры, пауза
-// let state = 2; игра началась, машинка едет
-// let state = 3; машинки врезались, конец игры
+// 0 - игра не началась
+// 1 - пауза
+// 2 - игра началась
+// 3 - игра закончилась
+let state = 0;
 
-const treeSpeed = 3;
 let score = 0;
+let player;
+
+// стрелки для работы тачпадом
+function makeArrow() {
+    let arrow = document.querySelector('.arrow');
+
+    // Engine(start).appendChild(arrow);
+}
+
+let leftArrow = new makeArrow ('svg%20(14).svg', 'arrowLeft');
+let rightArrow = new makeArrow ('svg%20(13).svg', 'arrowRight');

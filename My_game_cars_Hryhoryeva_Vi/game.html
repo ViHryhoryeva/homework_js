@@ -5,85 +5,112 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, target-densitydpi=device-dpi, initial-scale=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no, maximum-scale=1.0">
+
     <title>My_game</title>
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    <header>
-        <div class="menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </header>
-    <div class="menu">
-        <nav>
-            <ul>
-                <li><button id="game" onclick="window.location.reload()">Играть</button></li>
-                <li><button id="records">Рекорды</button></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="wrapperBlock">
-<!--        <div class="player">-->
-<!--            <label>Ваше имя:</label>-->
-<!--            <input class="name-player" type="text" id='IName'>-->
-<!--            <input type="button" value="Запомнить" class="save" onclick="storeInfo()">-->
-<!--            <br>-->
-<!--            <img src="images/Tesla-Roadster-Download-Free-PNG.png">-->
-<!--        </div>-->
-        <div class="road"></div>
+    <div id="myPage">
+        <div class="wrapperBlock">
+            <div class="menu-form">
+                <input type="button" class="game-btn" value="Новая игра">
+                <input type="button" class="records-btn" value="Рекорды">
+            </div>
+<!--            <div class="table-records">-->
 
-        <img class="car" src="images/orange-car.png">
-        <img class="tree tree1" src="images/tree111.png">
-        <img class="tree tree2" src="images/tree111.png">
-        <img class="tree tree3" src="images/tree111.png">
-        <img class="tree tree4" src="images/tree111.png">
-        <img class="tree tree5" src="images/tree111.png">
-        <img class="tree tree6" src="images/tree111.png">
-
-        <img class="car2" src="images/car_pink.png">
-        <img class="coin" src="images/coin.png">
-
-        <button class="game-btn">
-            <img class="play" src="images/play.png">
-            <img class="pause" src="images/pause.png">
-        </button>
-
-        <div class="game-score">0</div>
-
-<!--        <div class="game-off">-->
-<!--            <div class="end">Конец игры!!!</div>-->
-<!--            <div class="text">Счет игры:-->
-<!--                <span class="text-score">0</span>-->
 <!--            </div>-->
-<!--            <button type="button" class="restart-btn">Начать игру заново</button>-->
-<!--        </div>-->
+
+            <table border="1" class="table-records">
+                <tr>
+                    <th>№</th>
+                    <th>Имя игрока</th>
+                    <th>Рекорд игрока</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <div class="player">
+                <label>Ваше имя:</label>
+                <input class="name-player" type="text" id='IName'>
+                <input type="button" value="Играть" class="save">
+                <br>
+                <img src="images/Tesla-Roadster-Download-Free-PNG.png">
+            </div>
+            <div class="road"></div>
+
+            <img class="car" src="images/orange-car.png">
+            <img class="tree tree1" src="images/tree111.png">
+            <img class="tree tree2" src="images/tree111.png">
+            <img class="tree tree3" src="images/tree111.png">
+            <img class="tree tree4" src="images/tree111.png">
+            <img class="tree tree5" src="images/tree111.png">
+            <img class="tree tree6" src="images/tree111.png">
+
+            <img class="car2" src="images/car_pink.png">
+            <img class="coin" src="images/coin.png">
+
+            <button class="pause-btn">
+                <img class="pause" src="images/pause.png">
+                <img class="play" src="images/play.png">
+            </button>
+
+            <div class="game-score">0</div>
+
+            <div class="game-off">
+                <div class="end">Конец игры!!!</div>
+                <div class="text">Счет игры:
+                    <span class="text-score">0</span>
+                </div>
+                <button type="button" class="restart-btn">Начать игру заново</button>
+            </div>
 
 
-        <div class="arrow">
-            <img class="arrowLeft" src="images/svg%20(14).svg">
-            <img class="arrowRight" src="images/svg%20(13).svg">
+            <div class="arrow">
+                <img class="arrowLeft" src="images/svg%20(14).svg">
+                <img class="arrowRight" src="images/svg%20(13).svg">
+            </div>
         </div>
     </div>
 
 
-    <script src="script/controller.js"></script>
-    <script src="script/storage.js"></script>
-    <script src="script/events.js"></script>
-    <script src="script/engine.js"></script>
-    <script src="script/view.js"></script>
-    <script src="script/model.js"></script>
     <script src="script/parameters.js"></script>
+    <script src="script/engine.js"></script>
     <script src="script/model.js"></script>
+    <script src="script/view.js"></script>
+    <script src="script/storage.js"></script>
+    <script src="script/controller.js"></script>
     <script src="script/script.js"></script>
 
-
-
-<!--    <script src="storage.js"></script>-->
-    <!--    <script src="https://fe.it-academy.by/JQ/jquery.js"></script>-->
-<!--    <script src="burger.js"></script>-->
-    <!--    <script src="header.js"></script>-->
-<!--    <script src="controller.js"></script>-->
 </body>
 </html>

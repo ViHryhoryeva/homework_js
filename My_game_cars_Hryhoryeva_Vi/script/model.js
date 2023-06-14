@@ -1,17 +1,35 @@
 'use strict'
-function State() {
-    let self = this;
-
-    let state = 1;
-
-    self.getState = function () {
-        return state;
-    }
-
-    self.setState = function (newState) {
-        state = newState;
-    }
-}
+// function GameData() {
+//     let self = this;
+//
+//     let state = 1;
+//     let coins = 0;
+//     let player
+//
+//     self.getState = function () {
+//         return state;
+//     }
+//
+//     self.setState = function (newState) {
+//         state = newState;
+//     }
+//
+//     self.getCoins = function () {
+//         return state;
+//     }
+//
+//     self.addCoin = function (newState) {
+//         coins++;
+//     }
+//
+//     self.getPlayer = function () {
+//         return player;
+//     }
+//
+//     self.setPlayer = function (value) {
+//         player = value;
+//     }
+// }
 
 function Car(element) {
     let self = this;
@@ -105,7 +123,7 @@ function Tree(element) {
     let self = this;
 
     let position = getPosition(element);
-    let speed = 3;
+    let speed = 2;
 
     self.move = function () {
         let newPositionY = position.y + speed;
@@ -122,6 +140,10 @@ function Tree(element) {
 
     self.getElement = function () {
         return element;
+    }
+
+    self.addSpeed = function () {
+        speed += 0.5;
     }
 }
 
@@ -158,6 +180,10 @@ function EnemyCar(element) {
     self.getElement = function () {
         return element;
     }
+
+    self.addSpeed = function () {
+        speed += 1;
+    }
 }
 
 function Coin(element) {
@@ -167,10 +193,16 @@ function Coin(element) {
     let height = element.clientHeight
     let position = getPosition(element);
     let visible = true;
-    let speed = 2;
+
+    let speed = 4;
 
     self.move = function () {
         position.y = position.y + speed;
+    }
+
+    self.setPosition = function (x, y) {
+        position.x = x;
+        position.y = y;
     }
 
     self.getHeight = function (){
@@ -188,9 +220,17 @@ function Coin(element) {
     self.getElement = function () {
         return element;
     }
-    self.setPosition = function (x, y) {
-        position.x = x;
-        position.y = y;
+
+    self.isVisible = function () {
+        return visible;
+    }
+
+    self.setVisible = function (value) {
+        visible = value;
+    }
+
+    self.addSpeed = function () {
+        speed += 0.5;
     }
 }
 
